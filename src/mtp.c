@@ -459,25 +459,20 @@ int check_handle_access( mtp_ctx * ctx, fs_entry * entry, uint32_t handle, int w
 			return 1;
 		}
 
-		if( (storage_flags & UMTP_STORAGE_READONLY) && wraccess == 1 )
+		if( (storage_flags & UMTP_STORAGE_READONLY) && wraccess)
 		{
-			PRINT_DEBUG("check_handle_access : Storage 0x%.8x is Read only !",entry->storage_id);
+			if ((storage_flags & UMTP_STORAGE_DELETE) && wraccess == 2)
+			{
+				PRINT_DEBUG("check_handle_access : Storage 0x%.8x is read only but allows delete",entry->storage_id);
+			} else {
+				PRINT_DEBUG("check_handle_access : Storage 0x%.8x is Read only !",entry->storage_id);
 
-			if( response )
+				if( response )
 				*response = MTP_RESPONSE_STORE_READ_ONLY;
 
-			return 1;
-		}
-
-		/* Only allow delete if DELETE is allowed or this is a READWRITE storage */
-		if( wraccess == 2 && ((storage_flags & UMTP_STORAGE_DELETE) == 0 || (storage_flags & UMTP_STORAGE_READWRITE) == 0 ))
-		{
-			PRINT_DEBUG("check_handle_access : Storage 0x%.8x is Read only and DELETE mode is not set !",entry->storage_id);
-
-			if( response )
-				*response = MTP_RESPONSE_STORE_READ_ONLY;
-
-			return 1;
+				return 1;
+			}
+			
 		}
 
 	}
