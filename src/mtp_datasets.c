@@ -131,7 +131,7 @@ int build_storageinfo_dataset(mtp_ctx * ctx,void * buffer, int maxsize,uint32_t 
 		if( storage_flags & UMTP_STORAGE_READONLY )
 			if (storage_flags & UMTP_STORAGE_DELETE) {
 				PRINT_DEBUG("Storage is READONLY+Delete %s", storage_path);
-				ofs = poke16(buffer, ofs, maxsize, MTP_STORAGE_READ_ONLY_WITH_DELETE);
+				ofs = poke16(buffer, ofs, maxsize, MTP_STORAGE_READ_ONLY_WITHOUT_DELETE);
 			} else {
 				ofs = poke16(buffer, ofs, maxsize, MTP_STORAGE_READ_ONLY_WITHOUT_DELETE);
 			}
