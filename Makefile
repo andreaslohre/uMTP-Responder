@@ -10,7 +10,6 @@ ifeq ($(DEBUG), 1)
 	CFLAGS += -O0 -g -DDEBUG
 else
 	CFLAGS += -O3
-	LDFLAGS += -s
 endif
 
 ifeq ($(SYSTEMD), 1)
