@@ -939,6 +939,12 @@ int mtp_push_event(mtp_ctx * ctx, uint32_t event, int nbparams, uint32_t * param
 	int size;
 	int ret;
 
+	if(!ctx->fs_db) {
+		PRINT_DEBUG("mtp_push_event : No session was open, skipping event");
+		return 0;
+	}
+
+
 	size = build_event_dataset( ctx, event_buffer, sizeof(event_buffer), event , ctx->session_id, 0x00000000, nbparams, parameters);
 	if(size < 0)
 		return -1;
